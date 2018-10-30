@@ -1,5 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import time
+import view
+
 
 HOST_NAME = 'localhost'
 PORT_NUMBER = 9000
@@ -35,13 +37,18 @@ class handler(BaseHTTPRequestHandler):
         else:
             self.respond({'status': 500})
 
+
+    def htmlrender(self):
+        f = view.open("home.html", 'r')
+        return f
+
     # setup the header, then if the client accepts it, display the content
     def handle_http(self, status_code, path):
         self.send_response(status_code)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
 
-        content = "<html><header><title>This is title</title></header><body>Hello world</body></html>".format(path)
+        content = htmlrender().format(path)
         return bytes(content, 'UTF-8')
 
     #
