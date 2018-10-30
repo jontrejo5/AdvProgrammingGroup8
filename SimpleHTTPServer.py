@@ -36,13 +36,14 @@ class handler(BaseHTTPRequestHandler):
         else:
             self.respond({'status': 500})
 
+
     # setup the header, then if the client accepts it, display the content
     def handle_http(self, status_code, path):
         self.send_response(status_code)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
         
-        content = "<html><header><title>This is title</title></header><body>Hello world</body></html>".format(path)
+        content = "<html><header><title>This is library</title></header><body>hi</body></html>".format(path)
         return bytes(content, 'UTF-8')
     #
     def respond(self, opts):
