@@ -43,7 +43,7 @@ class handler(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html')
         self.end_headers()
         
-        content = "<html><header><title>This is library</title></header><body>hi</body></html>".format(path)
+        content = "<html><header><title>This is library</title></header><body>hello</body></html>".format(path)
         return bytes(content, 'UTF-8')
     #
     def respond(self, opts):

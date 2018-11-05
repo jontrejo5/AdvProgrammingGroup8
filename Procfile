@@ -1,1 +1,1 @@
-worker: python SimpleHTTPServer.py
+web: python SimpleHTTPServer.py
