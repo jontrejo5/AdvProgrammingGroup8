@@ -3,7 +3,7 @@ import time
 
 
 HOST_NAME = 'localhost'
-PORT_NUMBER = 9000
+PORT_NUMBER = 80
 
 # handler is a process that runs in response to a request
 class handler(BaseHTTPRequestHandler):
