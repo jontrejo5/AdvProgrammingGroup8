@@ -1,6 +1,8 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
+import ssl
 import time
-
+import threading
+import socket
 
 HOST_NAME = 'localhost'
 PORT_NUMBER = 5000
@@ -50,13 +52,24 @@ class handler(BaseHTTPRequestHandler):
         response = self.handle_http(opts['status'], self.path)
         self.wfile.write(response)
 
+
+
+
 if __name__ == '__main__':
     server_class = HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), handler)
     print(time.asctime(), 'Server Starts - %s:%s' % (HOST_NAME, PORT_NUMBER))
+
+    httpd.socket = ssl.wrap_socket(httpd.socket, keyfile='host.key', certfile='host.cert', server_side=True)
+
+    httpd.serve_forever()
+
     try:
-        httpd.serve_forever()
+        threading.Thread(httpd.serve_forever())
     except KeyboardInterrupt:
         pass
     httpd.server_close()
     print(time.asctime(), 'Server Stops - %s:%s' % (HOST_NAME, PORT_NUMBER))
+
+
+
