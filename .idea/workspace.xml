@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6521e866-3e84-4f34-b27f-b50e46fbeb4b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/testing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SimpleHTTPServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleHTTPServer.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -73,13 +71,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SimpleHTTPServer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="64" column="21" lean-forward="true" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="21" />
+            <state relative-caret-position="764">
+              <caret line="61" column="4" lean-forward="true" selection-start-line="61" selection-start-column="4" selection-end-line="61" selection-end-column="4" />
               <folding>
                 <element signature="e#0#58#0" expanded="true" />
-                <marker date="1543740483630" expanded="true" signature="264:266" ph="..." />
-                <marker date="1543740483630" expanded="true" signature="903:909" ph="..." />
-                <marker date="1543740483630" expanded="true" signature="1520:1521" ph="..." />
+                <marker date="1543741460653" expanded="true" signature="264:266" ph="..." />
+                <marker date="1543741460653" expanded="true" signature="903:909" ph="..." />
+                <marker date="1543741460653" expanded="true" signature="1520:1521" ph="..." />
               </folding>
             </state>
           </provider>
@@ -167,9 +165,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="4">
-    <option name="x" value="1437" />
+    <option name="x" value="1439" />
     <option name="width" value="1439" />
-    <option name="height" value="1440" />
+    <option name="height" value="1593" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -328,7 +326,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1437" y="0" width="1439" height="1440" extended-state="4" />
+    <frame x="1439" y="0" width="1439" height="1593" extended-state="4" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1532486" />
@@ -336,7 +334,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4992948" visible="true" weight="0.27231467" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4992948" visible="true" weight="0.2440678" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39939487" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -427,13 +425,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SimpleHTTPServer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="64" column="21" lean-forward="true" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="21" />
+        <state relative-caret-position="764">
+          <caret line="61" column="4" lean-forward="true" selection-start-line="61" selection-start-column="4" selection-end-line="61" selection-end-column="4" />
           <folding>
             <element signature="e#0#58#0" expanded="true" />
-            <marker date="1543740483630" expanded="true" signature="264:266" ph="..." />
-            <marker date="1543740483630" expanded="true" signature="903:909" ph="..." />
-            <marker date="1543740483630" expanded="true" signature="1520:1521" ph="..." />
+            <marker date="1543741460653" expanded="true" signature="264:266" ph="..." />
+            <marker date="1543741460653" expanded="true" signature="903:909" ph="..." />
+            <marker date="1543741460653" expanded="true" signature="1520:1521" ph="..." />
           </folding>
         </state>
       </provider>
