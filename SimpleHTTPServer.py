@@ -3,6 +3,7 @@ import ssl
 import time
 import threading
 import socket
+import os
 
 HOST_NAME = 'localhost'
 PORT_NUMBER = 5000
@@ -23,21 +24,20 @@ class handler(BaseHTTPRequestHandler):
     # get the path
     def do_GET(self):
 
-        # if the requested path leades to either of these, send the following response
-        paths = {
-            '/foo': {'status': 200},
-            '/bar': {'status': 302},
-            '/baz': {'status': 404},
-            '/qux': {'status': 500}
-        }
+        if self.path =='/':
+            self.path = "../views/home.html"
 
-        # if the path exists, then send the user to it
-        if self.path in paths:
-            self.respond(paths[self.path])
-        # otherwise, just send a 500 status
-        else:
-            self.respond({'status': 500})
 
+        try:
+            sendReply = False
+
+            if self.path.endswith("html"):
+                mimetype ='text/html'
+                sendReply = True
+            return
+
+        except IOError:
+            self.send_error(404,"File Not Found: ")
 
     # setup the header, then if the client accepts it, display the content
     def handle_http(self, status_code, path):
