@@ -21,33 +21,32 @@ class handler(BaseHTTPRequestHandler):
         # end the header setup
         self.end_headers()
 
-    # get the path
     def do_GET(self):
+        paths = {
+            '/foo': {'status': 200},
+            '/bar': {'status': 302},
+            '/baz': {'status': 404},
+            '/qux': {'status': 500}
+        }
 
-        if self.path =='/':
-            self.path = "../views/home.html"
-
-
-        try:
-            sendReply = False
-
-            if self.path.endswith("html"):
-                mimetype ='text/html'
-                sendReply = True
-            return
-
-        except IOError:
-            self.send_error(404,"File Not Found: ")
+        if self.path in paths:
+            self.respond(paths[self.path])
+        else:
+            self.respond({'status': 500})
 
     # setup the header, then if the client accepts it, display the content
     def handle_http(self, status_code, path):
         self.send_response(status_code)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
-        
-        content = "<html><header><title>This is library</title></header><body>hello</body></html>".format(path)
+        content = '''
+        <html><head><title>Title goes here.</title></head>
+        <body><p>This is a test.</p>
+        <p>You accessed path: {}</p>
+        </body></html>
+        '''.format(path)
         return bytes(content, 'UTF-8')
-    #
+
     def respond(self, opts):
         response = self.handle_http(opts['status'], self.path)
         self.wfile.write(response)
@@ -60,12 +59,10 @@ if __name__ == '__main__':
     httpd = server_class((HOST_NAME, PORT_NUMBER), handler)
     print(time.asctime(), 'Server Starts - %s:%s' % (HOST_NAME, PORT_NUMBER))
 
-    httpd.socket = ssl.wrap_socket(httpd.socket, keyfile='host.key', certfile='host.cert', server_side=True)
-
-    httpd.serve_forever()
+    # httpd.socket = ssl.wrap_socket(httpd.socket, keyfile='host.key', certfile='host.cert', server_side=True)
 
     try:
-        threading.Thread(httpd.serve_forever())
+        httpd.serve_forever()
     except KeyboardInterrupt:
         pass
     httpd.server_close()
