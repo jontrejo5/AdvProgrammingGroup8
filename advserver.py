@@ -4,6 +4,7 @@ import time
 import threading
 import socket
 import os
+import time
 
 HOST_NAME = 'localhost'
 PORT_NUMBER = 5000
@@ -16,6 +17,7 @@ class handler(BaseHTTPRequestHandler):
 
         # HTML response code: OK
         self.send_response(200)
+
         # https://www.stubbornjava.com/posts/what-is-a-content-type
         self.send_header('Content-type', 'text/html')
         # end the header setup
@@ -23,10 +25,8 @@ class handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         paths = {
-            '/foo': {'status': 200},
-            '/bar': {'status': 302},
-            '/baz': {'status': 404},
-            '/qux': {'status': 500}
+            '/home': {'status': 200},
+            '/': {'status': 200}
         }
 
         if self.path in paths:
@@ -39,12 +39,30 @@ class handler(BaseHTTPRequestHandler):
         self.send_response(status_code)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
-        content = '''
-        <html><head><title>Title goes here.</title></head>
-        <body><p>This is a test.</p>
-        <p>You accessed path: {}</p>
-        </body></html>
-        '''.format(path)
+
+
+        # open file
+
+
+
+        try:
+            if path == "/":
+                with open(os.getcwd() + '/views/home.html', 'r') as htmlfile:
+                    content = htmlfile.read().replace('\n', '')
+            else:
+                with open(os.getcwd() + '/views/' + path + '.html', 'r') as htmlfile:
+                    content = htmlfile.read().replace('\n', '')
+        except IOError as e:
+            with open(os.getcwd() + '/views/error.html', 'r') as htmlfile:
+                content = htmlfile.read().replace('\n', '')
+
+        # content = '''
+        # <html><head><title>Title goes here.</title>
+        # <link rel='icon' href='favicon.ico' type='image/x-icon'/</head>
+        # <body><p>This is a test.</p>
+        # <p>You accessed path: {}</p>
+        # </body></html>
+        # '''.format(path)
         return bytes(content, 'UTF-8')
 
     def respond(self, opts):
@@ -52,17 +70,20 @@ class handler(BaseHTTPRequestHandler):
         self.wfile.write(response)
 
 
-
+# define the lock for threading
+serv_lock = threading.Lock()
 
 if __name__ == '__main__':
     server_class = HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), handler)
     print(time.asctime(), 'Server Starts - %s:%s' % (HOST_NAME, PORT_NUMBER))
 
+    # secure the socket connection via
     httpd.socket = ssl.wrap_socket(httpd.socket, keyfile='host.key', certfile='host.cert', server_side=True)
 
     try:
-        httpd.serve_forever()
+        t = threading.Thread(httpd.serve_forever())
+        t.start()
     except KeyboardInterrupt:
         pass
     httpd.server_close()

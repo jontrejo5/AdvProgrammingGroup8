@@ -1,0 +1,66 @@
+.noscrollbar::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+
+errorbody {
+    width: 50%;
+    height: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.compact.column {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.flex.column {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.flex.stretch.column {
+    flex-grow: 1;
+    align-items: stretch;
+}
+
+.flex.filler {
+    flex: 1;
+    padding: 1em;
+}
+
+.dark {
+    background-color: #4b5252;
+}
+
+.flex.middle.aligned {
+    justify-content: center;
+}
+
+.expandable.table > tbody > tr.content:not(.active):not(.transition){
+    display: none;
+}
+
+.expandable.table > tbody > tr.title:hover {
+    cursor: pointer;
+}
+
+.expandable.table {
+    table-layout: fixed;
+}
+
+/* Override default semantic styling for active rows */
+.ui.table tr.content.active,
+.ui.table tr.title.active {
+    background: inherit !important;
+    color: inherit !important;
+}
+
+.dimmable {
+    position: relative;
+}
