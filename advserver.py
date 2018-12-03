@@ -46,7 +46,7 @@ class handler(BaseHTTPRequestHandler):
 
 
         # make the processing take a long time to test multithreading
-        time.sleep(10)
+        time.sleep(5)
 
         try:
             if path == "/":
@@ -73,13 +73,15 @@ class handler(BaseHTTPRequestHandler):
         self.wfile.write(response)
 
 
+# define the lock for threading
+serv_lock = threading.Lock()
 
 if __name__ == '__main__':
     server_class = HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), handler)
     print(time.asctime(), 'Server Starts - %s:%s' % (HOST_NAME, PORT_NUMBER))
 
-    # secure the socket connection via does not work on systems that have not created the cert/key
+    # secure the socket connection via
     # httpd.socket = ssl.wrap_socket(httpd.socket, keyfile='host.key', certfile='host.cert', server_side=True)
 
     try:
@@ -88,16 +90,13 @@ if __name__ == '__main__':
             req, addr = httpd.get_request()
 
             # make sure the request is OK
-            if not httpd.verify_request(req, addr):
-                continue
-
-            # process the request on a new thread and continue on
-            threading.Thread(target=httpd.process_request, args=(req, addr)).start()
+            if httpd.verify_request(req, addr):
+                # process the request on a new thread and continue on
+                threading.Thread(target=httpd.process_request, args=(req, addr)).start()
 
     except KeyboardInterrupt:
         pass
     httpd.server_close()
     print(time.asctime(), 'Server Stops - %s:%s' % (HOST_NAME, PORT_NUMBER))
-
 
 
