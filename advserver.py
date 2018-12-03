@@ -73,15 +73,13 @@ class handler(BaseHTTPRequestHandler):
         self.wfile.write(response)
 
 
-# define the lock for threading
-serv_lock = threading.Lock()
 
 if __name__ == '__main__':
     server_class = HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), handler)
     print(time.asctime(), 'Server Starts - %s:%s' % (HOST_NAME, PORT_NUMBER))
 
-    # secure the socket connection via
+    # secure the socket connection via does not work on systems that have not created the cert/key
     # httpd.socket = ssl.wrap_socket(httpd.socket, keyfile='host.key', certfile='host.cert', server_side=True)
 
     try:
