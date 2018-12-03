@@ -46,7 +46,7 @@ class handler(BaseHTTPRequestHandler):
 
 
         # make the processing take a long time to test multithreading
-        time.sleep(10)
+        time.sleep(5)
 
         try:
             if path == "/":
@@ -90,11 +90,9 @@ if __name__ == '__main__':
             req, addr = httpd.get_request()
 
             # make sure the request is OK
-            if not httpd.verify_request(req, addr):
-                continue
-
-            # process the request on a new thread and continue on
-            threading.Thread(target=httpd.process_request, args=(req, addr)).start()
+            if httpd.verify_request(req, addr):
+                # process the request on a new thread and continue on
+                threading.Thread(target=httpd.process_request, args=(req, addr)).start()
 
     except KeyboardInterrupt:
         pass
