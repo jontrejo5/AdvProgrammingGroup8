@@ -6,7 +6,8 @@ import socket
 import os
 import time
 
-HOST_NAME = 'localhost'
+# HOST_NAME = 0.0.0.0 makes it so that it serves on every interface
+HOST_NAME = '0.0.0.0'
 PORT_NUMBER = 5000
 
 # handler is a process that runs in response to a request
@@ -44,6 +45,8 @@ class handler(BaseHTTPRequestHandler):
         # open file
 
 
+        # make the processing take a long time to test multithreading
+        time.sleep(10)
 
         try:
             if path == "/":
@@ -79,11 +82,20 @@ if __name__ == '__main__':
     print(time.asctime(), 'Server Starts - %s:%s' % (HOST_NAME, PORT_NUMBER))
 
     # secure the socket connection via
-    httpd.socket = ssl.wrap_socket(httpd.socket, keyfile='host.key', certfile='host.cert', server_side=True)
+    # httpd.socket = ssl.wrap_socket(httpd.socket, keyfile='host.key', certfile='host.cert', server_side=True)
 
     try:
-        t = threading.Thread(httpd.serve_forever())
-        t.start()
+        while True:
+            # this is like 'accept' for sockets
+            req, addr = httpd.get_request()
+
+            # make sure the request is OK
+            if not httpd.verify_request(req, addr):
+                continue
+
+            # process the request on a new thread and continue on
+            threading.Thread(target=httpd.process_request, args=(req, addr)).start()
+
     except KeyboardInterrupt:
         pass
     httpd.server_close()
