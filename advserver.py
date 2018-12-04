@@ -1,8 +1,9 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from urllib.parse import urlparse
 import ssl
 import time
 import threading
-import socket
+import re
 import os
 import time
 import mistune
@@ -30,20 +31,22 @@ class handler(BaseHTTPRequestHandler):
             '/': {'status': 200}
         }
 
+        regex = re.compile("\\?")
+
         if self.path in paths:
             self.respond(paths[self.path])
         else:
-            self.respond({'status': 500})
+            if (regex.search(self.path) != None):
+                parsed = urlparse(self.path)
+                print("username :", parsed.username)
+            else:
+                self.respond({'status': 500})
 
     # setup the header, then if the client accepts it, display the content
     def handle_http(self, status_code, path):
         self.send_response(status_code)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
-
-
-        # open file
-
 
         # make the processing take a long time to test multithreading
         # time.sleep(5)
@@ -67,13 +70,7 @@ class handler(BaseHTTPRequestHandler):
             with open(os.getcwd() + '/views/error.html', 'r') as htmlfile:
                 content = htmlfile.read().replace('\n', '')
 
-        # content = '''
-        # <html><head><title>Title goes here.</title>
-        # <link rel='icon' href='favicon.ico' type='image/x-icon'/</head>
-        # <body><p>This is a test.</p>
-        # <p>You accessed path: {}</p>
-        # </body></html>
-        # '''.format(path)
+
         return bytes(content, 'UTF-8')
 
     def respond(self, opts):
