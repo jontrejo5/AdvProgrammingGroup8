@@ -1,6 +1,6 @@
 import pymysql
 
-db = pymysql.connect("http://192.168.47.1:3306/", "root", "%r(kHRxcp>Zw5we2b_nD", "advprog")
+db = pymysql.connect("localhost", "root", "", "advprog")
 
 def insertuser(username, password):
 

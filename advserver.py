@@ -5,6 +5,7 @@ import threading
 import socket
 import os
 import time
+import mistune
 
 # HOST_NAME = 0.0.0.0 makes it so that it serves on every interface
 HOST_NAME = '0.0.0.0'
@@ -12,7 +13,6 @@ PORT_NUMBER = 5000
 
 # handler is a process that runs in response to a request
 class handler(BaseHTTPRequestHandler):
-
     # setup headers for server requests
     def do_HEAD(self):
 
@@ -46,15 +46,23 @@ class handler(BaseHTTPRequestHandler):
 
 
         # make the processing take a long time to test multithreading
-        time.sleep(10)
+        # time.sleep(5)
 
         try:
             if path == "/":
                 with open(os.getcwd() + '/views/home.html', 'r') as htmlfile:
                     content = htmlfile.read().replace('\n', '')
+
+            elif path[:5] == '/page':
+                with open(os.getcwd() + '/views/' + path + '.md', 'r') as mdfile:
+                    mdparsed = mistune.markdown(mdfile.read())
+                with open(os.getcwd() + '/views/template.html', 'r') as htmlfile:
+                    content = htmlfile.read().replace('\n', '').replace('<!-- ~!BODY!~ -->', mdparsed)\
+                                             .replace('<!-- ~!TITLE!~ -->', path.split('/')[2])
             else:
                 with open(os.getcwd() + '/views/' + path + '.html', 'r') as htmlfile:
                     content = htmlfile.read().replace('\n', '')
+
         except IOError as e:
             with open(os.getcwd() + '/views/error.html', 'r') as htmlfile:
                 content = htmlfile.read().replace('\n', '')
@@ -90,16 +98,13 @@ if __name__ == '__main__':
             req, addr = httpd.get_request()
 
             # make sure the request is OK
-            if not httpd.verify_request(req, addr):
-                continue
-
-            # process the request on a new thread and continue on
-            threading.Thread(target=httpd.process_request, args=(req, addr)).start()
+            if httpd.verify_request(req, addr):
+                # process the request on a new thread and continue on
+                threading.Thread(target=httpd.process_request, args=(req, addr)).start()
 
     except KeyboardInterrupt:
         pass
     httpd.server_close()
     print(time.asctime(), 'Server Stops - %s:%s' % (HOST_NAME, PORT_NUMBER))
-
 
 
