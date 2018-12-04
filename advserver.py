@@ -1,8 +1,8 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import ssl
-import time
+import requests
 import threading
-import socket
+import re
 import os
 import time
 
@@ -46,7 +46,7 @@ class handler(BaseHTTPRequestHandler):
 
 
         # make the processing take a long time to test multithreading
-        time.sleep(5)
+        # time.sleep(5)
 
         try:
             if path == "/":
