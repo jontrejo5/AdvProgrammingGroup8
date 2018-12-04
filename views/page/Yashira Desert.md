@@ -1,5 +1,4 @@
-﻿# **The Yashira Desert**
-The desert is a cruel and unforgiving land, as all who live there know.  Filled to the brim with poisonous crawlers, little vegetation or water, but certainly no shortage of sand, the Yashira Desert is not a place for those who can’t handle the heat of the sun or of pitched battle.
+﻿The desert is a cruel and unforgiving land, as all who live there know.  Filled to the brim with poisonous crawlers, little vegetation or water, but certainly no shortage of sand, the Yashira Desert is not a place for those who can’t handle the heat of the sun or of pitched battle.
 ## __Ikhos__
 This region is home to a desert nation called Ihkos, a mostly human nation that has endured more hardships than most in the desert, though controlling much more than the others who live there.  They control the eastern end of the desert, from the base of the Sun’s Reach Mountains to the Evergreen Oasis, to much of the southern sands of the desert, near The Grave Bay.  In the past, they have fought off invaders from the Devil’s Fingers and Dakinir Pass, and even fought with the elves for control of the Evergreen Oasis.  Now, even though skirmishes between lawless bandits and the Orcish tribes of Khuul, they live in relative peace, ever searching and researching the numerous ruins that dot their lands.
 ## __Yllathlune__

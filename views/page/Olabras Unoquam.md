@@ -1,5 +1,4 @@
-﻿# **Olabras Unoquam**
-Not much is known about Olabras.
+﻿Not much is known about Olabras.
 ## __An old man in a robe...__
 This entity is rarely mentioned in the deepest corners of the largest libraries, mostly in arcane tomes dedicated to recording the achievements of long-passed mages.  He is often described as an older man with thick, dark hair and a bushy black beard, who looks much older than he really was.  For a human, he’s described to have an oddly gaunt face, deep-set eyes, and more wrinkles than one would expect.  In later tomes, he’s often noted for looking much lither and disturbingly thin.
 ## __...claiming communion with the divine.__
