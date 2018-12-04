@@ -75,7 +75,7 @@ class handler(BaseHTTPRequestHandler):
                     mdparsed = mistune.markdown(mdfile.read())
                 with open(os.getcwd() + '/views/template.html', 'r') as htmlfile:
                     content = htmlfile.read().replace('\n', '').replace('<!-- ~!BODY!~ -->', mdparsed)\
-                                             .replace('<!-- ~!TITLE!~ -->', path.split('/')[2])
+                                             .replace('<!-- ~!TITLE!~ -->', path.split('/')[2].replace('_', ' '))
             elif path[:5] == '/edit':
                 with open(os.getcwd() + '/views/page/' + path.split('=')[1] + '.md', 'r') as mdfile:
                     md = mdfile.read()
