@@ -5,6 +5,7 @@ import threading
 import socket
 import os
 import time
+import mistune
 
 # HOST_NAME = 0.0.0.0 makes it so that it serves on every interface
 HOST_NAME = '0.0.0.0'
@@ -12,7 +13,6 @@ PORT_NUMBER = 5000
 
 # handler is a process that runs in response to a request
 class handler(BaseHTTPRequestHandler):
-
     # setup headers for server requests
     def do_HEAD(self):
 
@@ -46,15 +46,23 @@ class handler(BaseHTTPRequestHandler):
 
 
         # make the processing take a long time to test multithreading
-        time.sleep(5)
+        # time.sleep(5)
 
         try:
             if path == "/":
                 with open(os.getcwd() + '/views/home.html', 'r') as htmlfile:
                     content = htmlfile.read().replace('\n', '')
+
+            elif path[:5] == '/page':
+                with open(os.getcwd() + '/views/' + path + '.md', 'r') as mdfile:
+                    mdparsed = mistune.markdown(mdfile.read())
+                with open(os.getcwd() + '/views/template.html', 'r') as htmlfile:
+                    content = htmlfile.read().replace('\n', '').replace('<!-- ~!BODY!~ -->', mdparsed)\
+                                             .replace('<!-- ~!TITLE!~ -->', path.split('/')[2])
             else:
                 with open(os.getcwd() + '/views/' + path + '.html', 'r') as htmlfile:
                     content = htmlfile.read().replace('\n', '')
+
         except IOError as e:
             with open(os.getcwd() + '/views/error.html', 'r') as htmlfile:
                 content = htmlfile.read().replace('\n', '')
