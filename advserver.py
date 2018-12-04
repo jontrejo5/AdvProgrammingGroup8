@@ -8,6 +8,7 @@ import os
 import time
 import mistune
 import cgi
+import dbconnect as db
 
 # HOST_NAME = 0.0.0.0 makes it so that it serves on every interface
 HOST_NAME = '0.0.0.0'
@@ -37,9 +38,21 @@ class handler(BaseHTTPRequestHandler):
         if self.path in paths:
             self.respond(paths[self.path])
         else:
+            #get user
+            username = ""
+            password = ""
             if (regex.search(self.path) != None):
                 parsed = urlparse(self.path)
-                print("username :", parsed.username)
+                data = str(parsed.query).split("&")
+                username = data[0]
+                password = data[1]
+                username = username.split("=")
+                password = password.split("=")
+                username = username[1]
+                password = password[1]
+                print(username,password)
+                db.insertuser(username,password)
+                self.respond({'status': 200})
             else:
                 self.respond({'status': 500})
 
