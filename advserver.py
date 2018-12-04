@@ -7,6 +7,7 @@ import re
 import os
 import time
 import mistune
+import cgi
 
 # HOST_NAME = 0.0.0.0 makes it so that it serves on every interface
 HOST_NAME = '0.0.0.0'
@@ -42,6 +43,22 @@ class handler(BaseHTTPRequestHandler):
             else:
                 self.respond({'status': 500})
 
+    def do_POST(self):
+        # Parse the form data posted
+        form = cgi.FieldStorage(
+            fp=self.rfile,
+            headers=self.headers,
+            environ={'REQUEST_METHOD':'POST',
+                     'CONTENT_TYPE':self.headers['Content-Type'],
+                     })
+
+
+        page_save(form.getvalue("page-name"),form.getvalue("page-edit"))
+        # Begin the response
+        self.send_response(301)
+        self.send_header('Location', '/page/' + form.getvalue("page-name"))
+        self.end_headers()
+
     # setup the header, then if the client accepts it, display the content
     def handle_http(self, status_code, path):
         self.send_response(status_code)
@@ -62,6 +79,13 @@ class handler(BaseHTTPRequestHandler):
                 with open(os.getcwd() + '/views/template.html', 'r') as htmlfile:
                     content = htmlfile.read().replace('\n', '').replace('<!-- ~!BODY!~ -->', mdparsed)\
                                              .replace('<!-- ~!TITLE!~ -->', path.split('/')[2])
+            elif path[:5] == '/edit':
+                with open(os.getcwd() + '/views/page/' + path.split('=')[1] + '.md', 'r') as mdfile:
+                    md = mdfile.read()
+                with open(os.getcwd() + '/views/edit.html', 'r') as htmlfile:
+                    if __name__ == '__main__':
+                        content = htmlfile.read().replace('\n', '').replace('<!-- ~!MDEDIT!~ -->', md)\
+                                                                   .replace('<!-- ~!NAME!~ -->', path.split('=')[1])
             else:
                 with open(os.getcwd() + '/views/' + path + '.html', 'r') as htmlfile:
                     content = htmlfile.read().replace('\n', '')
@@ -76,6 +100,13 @@ class handler(BaseHTTPRequestHandler):
     def respond(self, opts):
         response = self.handle_http(opts['status'], self.path)
         self.wfile.write(response)
+
+def page_save(page_name, page_data):
+    print(page_name)
+    print(os.getcwd() + '/views/page/' + page_name + '.md')
+    with open(os.getcwd() + '/views/page/' + page_name + '.md', 'w') as page:
+            page.write(page_data)
+    return
 
 
 # define the lock for threading

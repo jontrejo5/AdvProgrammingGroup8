@@ -43,13 +43,26 @@
   <a href="home">Home</a>
   <a href="Search">Search</a>
   <a href="categories">Categories</a>
-  <a href="edit">Edit</a>
+  <a href="edit?page=<!-- ~!NAME!~ -->">Edit</a>
   <a href="new">New</a>
   <a href="settings">Settings</a>
   <a href="logout">Logout</a>
 </div>
 </head>
 <body>
+
+<br>
+Enter page updates below:
+
+<br><br>
+
+<form id="edit" action="/page/<!-- ~!NAME!~ -->" method="POST">
+    <input type="hidden" name="page-name" value="<!-- ~!NAME!~ -->">
+    <textarea name="page-edit" form="edit" rows="30" cols="80"><!-- ~!MDEDIT!~ -->
+    </textarea><br>
+    <input type="submit" value="Submit">
+</form>
+
 
 </body>
 
