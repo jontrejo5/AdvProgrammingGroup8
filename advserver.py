@@ -7,6 +7,7 @@ import os
 import time
 import mistune
 import cgi
+import glob
 
 # HOST_NAME = 0.0.0.0 makes it so that it serves on every interface
 HOST_NAME = '0.0.0.0'
@@ -64,6 +65,7 @@ class handler(BaseHTTPRequestHandler):
 
         # make the processing take a long time to test multithreading
         # time.sleep(5)
+        print(path)
 
         try:
             if path == "/":
@@ -83,6 +85,11 @@ class handler(BaseHTTPRequestHandler):
                     if __name__ == '__main__':
                         content = htmlfile.read().replace('\n', '').replace('<!-- ~!MDEDIT!~ -->', md)\
                                                                    .replace('<!-- ~!NAME!~ -->', path.split('=')[1])
+            elif path == '/categories':
+                l = dir_list_html(os.getcwd() + "/views/page")
+                with open(os.getcwd() + '/views/categories.html', 'r') as htmlfile:
+                    content = htmlfile.read().replace('\n', '').replace('<!-- ~!DIRLIST!~ -->', l)
+
             else:
                 with open(os.getcwd() + '/views/' + path + '.html', 'r') as htmlfile:
                     content = htmlfile.read().replace('\n', '')
@@ -105,11 +112,23 @@ class handler(BaseHTTPRequestHandler):
         self.wfile.write(response)
 
 def page_save(page_name, page_data):
-    print(page_name)
-    print(os.getcwd() + '/views/page/' + page_name + '.md')
     with open(os.getcwd() + '/views/page/' + page_name + '.md', 'w') as page:
             page.write(page_data)
-    return
+
+
+def dir_list_html(dir):
+    out = ""
+    l = glob.glob(dir + "/*.md")
+
+    for f in l:
+        out += "<a href=\"page/" + f.split('/')[-1][:-3] + "\">"+ f.split('/')[-1][:-3].replace('_',' ') + "<br>"
+
+    print (out)
+
+    return out
+
+
+
 
 
 # define the lock for threading
